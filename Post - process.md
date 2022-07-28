@@ -86,7 +86,13 @@ adjacents=>{
 }
 ```
 `TABLES`<br>
-
+- Para eliminar tablas con formatos muy extraños
+```javascript
+data => {
+  data[0].content = data[0].content.replace(/<table[.*|\s*|\S*]*<\/table>/g, '')
+  return data
+}
+```
 - Dar formato de tabla a span con saltos de linea
 ```javascript
 des => {
@@ -221,6 +227,47 @@ real_price =>{
 }
 ```
 `OPTIONS`
+- Mientras la key tenga `size` como texto, te la devolvera como size
+```javascript
+options => {
+    var keys = Object.keys(options)
+    const new_options = {...options}
+    if (keys[0] == null){
+        return options
+    } else {
+        keys.map(key => {
+            if(key.toLowerCase().includes("size")){
+                new_options["size"] = options[key]
+                delete new_options[key]
+            }
+        })
+        return new_options
+   
+    }
+    return options     
+}
+```
+- Cuando viene `size - color` juntos como opcion `cambia el sentido y el divisor`
+```javascript
+options => {
+    var keys = Object.keys(options)
+    var newOptions = {}
+    if(keys[0] === null){
+        return options
+    } else {
+        keys.map(key => {
+            if(key === "SIZE  COLOR"){
+                var val_1 = options[key].split(' - ')
+                newOptions["Size"] = val_1[0]
+                newOptions["Color"] = val_1[1]
+            } else {
+                newOptions[key] = options[key]
+            }
+        })
+        return newOptions
+    }
+}
+```
 - Cambiar size por amount si el selector esta tomando ejemplo: `size | $200
 ```javascript
 options => {
