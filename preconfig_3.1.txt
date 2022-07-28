@@ -1,0 +1,280 @@
+{
+  "sectionSelector": "body",
+  "preProcessFns": [],
+  "postNavigateFns": [
+    {
+      "fnName": "checkNotFound",
+      "fnParams": {
+        "strategy": "statusCode",
+        "statusCodes": [
+          404
+        ]
+      }
+    },
+    {
+      "fnName": "checkNotFound",
+      "fnParams": {
+        "strategy": "redirected"
+      }
+    },
+    {
+      "fnName": "checkProductPage",
+      "fnParams": {
+        "strategy": "urlNotMatch",
+        "urlNotMatch": "/products/"
+      }
+    },
+    {
+      "fnName": "checkNotFound",
+      "fnParams": {
+        "strategy": "shopifyVariantRedirect"
+      }
+    }
+  ],
+  "postProcessFns": [
+    {
+      "fnName": "assureMainDescription",
+      "fnParams": {
+        "headerKeys": [
+          "Description"
+        ]
+      }
+    },
+    {
+      "fnName": "keepOnlyFirstMainDescription",
+      "fnParams": {}
+    },
+    {
+      "fnName": "generateDescriptionFromMainDescription",
+      "fnParams": {}
+    },
+    {
+      "fnName": "extractBulletsFromAdditionalSections",
+      "fnParams": {}
+    },
+    {
+      "fnName": "extractVideosFromAdditionalSections",
+      "fnParams": {}
+    },
+    {
+      "fnName": "extractKeyValuePairsFromAdditionalSections",
+      "fnParams": {
+        "filterKeys": [
+          "https"
+        ],
+        "maxLength": 1000
+      }
+    },
+    {
+      "fnName": "populateSizeAndColor",
+      "fnParams": {
+        "colorKeys": [
+          "color",
+          "Color"
+        ],
+        "sizeKeys": [
+          "Size",
+          "size"
+        ]
+      }
+    },
+    {
+      "fnName": "normalizeShopifyImages",
+      "fnParams": {}
+    },
+    {
+      "fnName": "deduplicateVideos",
+      "fnParams": {}
+    },
+    {
+      "fnName": "deduplicateImages",
+      "fnParams": {}
+    },
+    {
+      "fnName": "normalizeProduct",
+      "fnParams": {}
+    }
+  ],
+  "variantsExtractor": {
+    "strategy": "shopify",
+    "oneVariantPerUrl": true,
+    "perVariantFns": []
+  },
+  "navigationOptions": {
+    "timeout": 120000,
+    "waitUntil": "waitHTMLRendered",
+    "useJquery": true,
+    "disableWaitUntil": false,
+    "clearExtraHeaders": false,
+    "disableWebSecurity": false,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 (compatible: Remo/0.1; +https://www.remotasks.com/en/info.txt)"
+  },
+  "propertiesExtractors": {
+    "url": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "pageData",
+          "path": "url"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "id": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "shopifyText",
+          "path": "variantData.id"
+        }
+      }
+    ],
+    "itemGroupId": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "shopifyText",
+          "path": "id"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "sku": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "shopifyText",
+          "path": "variantData.sku"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "realPrice": [
+      {
+        "extractorType": "number",
+        "extractorParams": {
+          "strategy": "shopifyNumber",
+          "path": "calculatedData.realPrice"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "higherPrice": [
+      {
+        "extractorType": "number",
+        "extractorParams": {
+          "strategy": "shopifyNumber",
+          "path": "calculatedData.higherPrice"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "currency": [
+      {
+        "extractorType": "staticValue",
+        "extractorParams": {
+          "strategy": "default",
+          "value": "USD"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "availability": [
+      {
+        "extractorType": "boolean",
+        "extractorParams": {
+          "strategy": "shopifyBoolean",
+          "path": "variantData.available"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "brand": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "customData",
+          "path": "vendor"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "video": [
+      {
+        "extractorType": "videos",
+        "extractorParams": {
+          "strategy": "shopify"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "image": [
+      {
+        "extractorType": "images",
+        "extractorParams": {
+          "strategy": "shopifyCustomData",
+          "placement": "secondary",
+          "deduplicate": false,
+          "normalize": false,
+          "removeQueryStrings": false,
+          "removeRegexValidation": false
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "title": [
+      {
+        "extractorType": "text",
+        "extractorParams": {
+          "strategy": "selectorTextContent",
+          "selector": ".product_name"
+        }
+      }
+    ],
+    "additionalSection": [
+      {
+        "extractorType": "additionalSections",
+        "extractorParams": {
+          "strategy": "shopify"
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ],
+    "option": [
+      {
+        "extractorType": "options",
+        "extractorParams": {
+          "strategy": "shopify",
+          "filter": [
+            "Title"
+          ]
+        },
+        "validation": {
+          "mandatory": false
+        }
+      }
+    ]
+  }
+}
