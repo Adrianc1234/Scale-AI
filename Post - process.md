@@ -1,4 +1,44 @@
 # POST PROCESS
+`IMAGES`
+- Eliminar imagenes que salen como `Background - image : url():`
+```javascript
+images => {
+    if (images[0] == null){
+        return []
+    } else {
+        var i = 0
+        images.forEach(x => {
+            images[i] = images[i].match(/(//cdn)([\S]+)(.(jpg|png|gif|jpeg|JPG|heic))/g)[0]
+            images[i] = "https:" + images[i]
+            var resolution = images[i].match(/([0-9]+)x(?=.(jpg|png|gif|jpeg|JPG|heic))/g)
+            if (resolution !==null){
+              images[i] = images[i].replace(/([0-9]+)x(?=.(jpg|png|gif|jpeg|JPG|heic))/g, "")
+            }
+            i++
+        })
+        return images
+    }
+} 
+```
+- Sacar imagenes desde el json `si no te sirve elimina la configuracion``Se pega desde la configuracion`
+```javascript
+"perVariantFns": [
+            {
+                fnName: 'customFunction',
+                fnParams: {
+                    fnCode: async (fnParams, page, extractorsDataObj) => {
+                        let data = extractorsDataObj.customData
+                        extractorsDataObj.customData.customImages = Object.fromEntries(data.variants.map((variant) => {
+                            return [variant.id, data.media.filter(media => media['media_type'] == "image" && media.alt.trim() === variant.featured_image.alt.trim()).map((media) => media.src)]
+                        }))[data.variantData.id]
+                    },
+                },
+            },
+        ]
+```
+selector type: customImages <br>
+Selector: variantData.featured_image.src
+
 `PARAGRAPH`
 
 - Arreglar formatos de lista
@@ -15,7 +55,7 @@ adjacents=>{
 }
 ```
 - Arreglar formato de lista `funciona mas`
-```
+```javascript
 adjacents=>{
     let i=0;
     adjacents.forEach(adjacent=>{
@@ -126,6 +166,27 @@ des => {
 ```
 
 `PRICE OR H PRICE`<br>
+- Cuando hay una coma y la tool la pone como un punto
+```javascript
+real_price =>{
+
+  try {
+      let num = real_price.match(/[0-9.,]+/g)[0];
+      if (num.includes(",")){
+          num = num.replace(/,/g, "")
+      }
+      num = Number(num)
+      if (num == 0 || isNaN(num)){
+          return undefined
+      } else{
+          return num
+       }
+
+  } catch (error){
+        return undefined
+    }
+}
+```
 - Para cuando el higher sale como `0`
 ```javascript
 higher_price =>{
