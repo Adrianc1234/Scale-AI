@@ -268,7 +268,7 @@ options => {
     }
 }
 ```
-- Cambiar size por amount si el selector esta tomando ejemplo: `size | $200
+- Cambiar Title por amount si el selector esta tomando ejemplo: `Title | $200
 ```javascript
 options => {
     var keys = Object.keys(options)
