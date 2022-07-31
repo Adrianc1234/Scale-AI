@@ -1,4 +1,21 @@
 # POST PROCESS
+`BRAND`
+- Esperar a la brand si no buscarla en el texto
+```javascript
+async(brand,{input,config},{_,Errors}) =>{
+    return await input.page.evaluate(async() => {
+        if(brand.includes('Brand:') == false ){
+            let url = window.location.href.replace(/\?variant=.*/g,'.json')
+            return await fetch(url).then(res => res.json()).then(data => data.product.vendor)
+        }else{
+            brand = brand.substring(brand.indexOf('Brand:')+7,brand.length)
+            brand = brand.substring(0,brand.indexOf('\n'))
+            return brand
+        }
+        
+    })
+}
+```
 `IMAGES`
 - Eliminar imagenes que salen como `Background - image : url():`
 ```javascript
