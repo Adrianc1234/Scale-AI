@@ -5,10 +5,7 @@
     {
       "fnName": "checkNotFound",
       "fnParams": {
-        "strategy": "statusCode",
-        "statusCodes": [
-          404
-        ]
+        "strategy": "shopifyVariantRedirect"
       }
     },
     {
@@ -27,7 +24,10 @@
     {
       "fnName": "checkNotFound",
       "fnParams": {
-        "strategy": "shopifyVariantRedirect"
+        "strategy": "statusCode",
+        "statusCodes": [
+          404
+        ]
       }
     }
   ],
