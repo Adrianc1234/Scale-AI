@@ -103,7 +103,12 @@ adjacents=>{
 }
 ```
 `TABLES`<br>
-- Para eliminar tablas con formatos muy extraños
+- Eliminar tablas de forma global con `RegexMatch And Replace`
+```
+(?<=<table)([\s\S])+(?<=</table)
+```
+
+- Eliminar tablas de forma global
 ```javascript
 data => {
   data[0].content = data[0].content.replace(/<table[.*|\s*|\S*]*<\/table>/g, '')
