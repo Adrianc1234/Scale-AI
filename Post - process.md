@@ -311,6 +311,30 @@ options => {
     }
 }
 ```
+- Remover `:` en opcion de color
+```
+(options, {input, config}, {_, Errors}) => {
+  var keys = Object.keys(options)
+  var newOptions = {}
+  if (keys[0] == null){
+    return options
+  } else {
+    keys.forEach(key => {
+      if (!options[key].includes('Title') && !options[key].includes('Default')){
+        if (key.includes(':')){
+          let ky = key.replace(/\n|[\s]{2,}/gmi, '').toUpperCase()
+          ky = ky.match(/([\s\S]+)(?=:)/gmi)[0]
+          newOptions[ky] = options[key]
+        } else {
+          newOptions[key] = options[key]
+        }
+      } 
+    })
+    return newOptions
+  }
+}
+```
+
 `USER AGENT USED:`
 ```javascript
 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 (compatible: Remo/0.1; +https://www.remotasks.com/en/info.txt)
