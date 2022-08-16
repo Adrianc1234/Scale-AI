@@ -312,7 +312,7 @@ options => {
 }
 ```
 - Remover `:` en opcion de color
-```
+``` Javascript
 (options, {input, config}, {_, Errors}) => {
   var keys = Object.keys(options)
   var newOptions = {}
