@@ -89,7 +89,7 @@ adjacents=>{
 ```
 `DESCRIPTIONS`
 - Description is empty more functional
-````
+````javascript
 newData = newData.replace(/\s+/g,'')
 newData = newData.replace(/\//,'')
 newData = newData.replace( /(<([^>]+)>)/ig, '')
