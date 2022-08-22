@@ -88,6 +88,16 @@ adjacents=>{
 }
 ```
 `DESCRIPTIONS`
+- Description is empty more functional
+````
+newData = newData.replace(/\s+/g,'')
+newData = newData.replace(/\//,'')
+newData = newData.replace( /(<([^>]+)>)/ig, '')
+if(newData.match(/[A-E]/gi) == null){
+  return []
+}
+console.log(data)
+````
 
 - If description is empty
 ```javascript
