@@ -90,13 +90,11 @@ adjacents=>{
 `DESCRIPTIONS`
 - Description is empty more functional
 ````javascript
-newData = newData.replace(/\s+/g,'')
-newData = newData.replace(/\//,'')
-newData = newData.replace( /(<([^>]+)>)/ig, '')
-if(newData.match(/[A-E]/gi) == null){
-  return []
+(data, {input, config}, {_, Errors}) => {
+  let content = data[0].content
+  content = content.replace(/(\n|\s|<\/?[\s\S]+?>)/g, '')
+  return content == '' ? []: data
 }
-console.log(data)
 ````
 
 - If description is empty
