@@ -202,6 +202,27 @@ des => {
 ```
 
 `PRICE OR H PRICE`<br>
+- Cuando una `,` corta el price y le pone punto
+``Javascript
+real_price =>{
+
+  try {
+      let num = real_price.match(/[0-9.,]+/g)[0];
+      if (num.includes(",")){
+          num = num.replace(/,/g, "")
+      }
+      num = Number(num)
+      if (num == 0 || isNaN(num)){
+          return undefined
+      } else{
+          return num
+       }
+
+  } catch (error){
+        return undefined
+    }
+}
+``
 - Cuando hay una coma y la tool la pone como un punto
 ```javascript
 real_price =>{
