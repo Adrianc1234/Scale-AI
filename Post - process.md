@@ -222,7 +222,7 @@ real_price =>{
         return undefined
     }
 }
-``
+````
 - Cuando hay una coma y la tool la pone como un punto
 ```javascript
 real_price =>{
