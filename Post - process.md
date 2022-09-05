@@ -203,7 +203,7 @@ des => {
 
 `PRICE OR H PRICE`<br>
 - Cuando una `,` corta el price y le pone punto
-``Javascript
+````Javascript
 real_price =>{
 
   try {
