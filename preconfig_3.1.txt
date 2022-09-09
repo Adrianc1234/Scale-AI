@@ -79,6 +79,10 @@
       }
     },
     {
+      "fnParams": {},
+      "fnName": "extractBulletsFromAdjacentAdditionalSections"
+    },
+    {
       "fnName": "normalizeShopifyImages",
       "fnParams": {}
     },
@@ -101,13 +105,14 @@
     "perVariantFns": []
   },
   "navigationOptions": {
-    "timeout": 120000,
+    "timeout": 200000,
     "waitUntil": "waitHTMLRendered",
     "useJquery": true,
     "disableWaitUntil": false,
     "clearExtraHeaders": false,
     "disableWebSecurity": false,
-    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 (compatible: Remo/0.1; +https://www.remotasks.com/en/info.txt)"
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.71 Safari/537.36 (compatible: Remo/0.1; +https://www.remotasks.com/en/info.txt)",
+    "timeoutRetries": 16
   },
   "propertiesExtractors": {
     "url": [
@@ -230,12 +235,48 @@
       {
         "extractorType": "images",
         "extractorParams": {
-          "strategy": "shopifyCustomData",
+          "strategy": "selectorAttribute",
           "placement": "secondary",
-          "deduplicate": false,
-          "normalize": false,
+          "deduplicate": true,
+          "normalize": true,
           "removeQueryStrings": false,
-          "removeRegexValidation": false
+          "removeRegexValidation": false,
+          "normalizeShopify": true,
+          "includeImagesWithoutExtension": false,
+          "includeFormatsInRegex": [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp"
+          ],
+          "minHeight": 0,
+          "minWidth": 0
+        },
+        "validation": {
+          "mandatory": false
+        }
+      },
+      {
+        "extractorType": "images",
+        "extractorParams": {
+          "strategy": "selectorAttribute",
+          "placement": "secondary",
+          "deduplicate": true,
+          "normalize": true,
+          "removeQueryStrings": false,
+          "removeRegexValidation": false,
+          "normalizeShopify": true,
+          "includeImagesWithoutExtension": false,
+          "includeFormatsInRegex": [
+            "jpg",
+            "jpeg",
+            "png",
+            "gif",
+            "webp"
+          ],
+          "minHeight": 0,
+          "minWidth": 0
         },
         "validation": {
           "mandatory": false
@@ -247,7 +288,11 @@
         "extractorType": "text",
         "extractorParams": {
           "strategy": "selectorTextContent",
-          "selector": ".product_name"
+          "unique": true,
+          "joinCharacter": " "
+        },
+        "validation": {
+          "mandatory": true
         }
       }
     ],
@@ -255,7 +300,10 @@
       {
         "extractorType": "additionalSections",
         "extractorParams": {
-          "strategy": "shopify"
+          "strategy": "selector",
+          "contentSelectorUnique": true,
+          "headerSelectorUnique": false,
+          "descriptionPlacement": DESCRIPTION_PLACEMENT.ADJACENT
         },
         "validation": {
           "mandatory": false
