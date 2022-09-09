@@ -241,6 +241,7 @@
           "normalize": true,
           "removeQueryStrings": false,
           "removeRegexValidation": false,
+          "attribute": "textContent",
           "normalizeShopify": true,
           "includeImagesWithoutExtension": false,
           "includeFormatsInRegex": [
@@ -249,9 +250,7 @@
             "png",
             "gif",
             "webp"
-          ],
-          "minHeight": 0,
-          "minWidth": 0
+          ]
         },
         "validation": {
           "mandatory": false
@@ -266,6 +265,7 @@
           "normalize": true,
           "removeQueryStrings": false,
           "removeRegexValidation": false,
+          "attribute": "textContent",
           "normalizeShopify": true,
           "includeImagesWithoutExtension": false,
           "includeFormatsInRegex": [
@@ -274,9 +274,7 @@
             "png",
             "gif",
             "webp"
-          ],
-          "minHeight": 0,
-          "minWidth": 0
+          ]
         },
         "validation": {
           "mandatory": false
